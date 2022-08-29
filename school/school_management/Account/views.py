@@ -33,15 +33,15 @@ def register(request):
             )
             user.save()
             messages.error(request,'user  create') 
-            form = RegistrationForm()
-            context = { 'form' : form }
-            return render(request,'signup.html',context)
+            
+            return redirect(user_login)
         else:    
             messages.error(request,'user does not create')  
 
     form = RegistrationForm()
     context = { 'form' : form }
     return render(request,'signup.html',context)  
+
 
 
 def user_login(request):
