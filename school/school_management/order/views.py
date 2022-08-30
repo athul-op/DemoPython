@@ -13,24 +13,18 @@ def place_orders(request):
         form =OrderForm(request.POST)
         
         if form.is_valid():
-        
-            data = Order()
-            
-            data.name = form.cleaned_data['name']
-            data.mobile = form.cleaned_data['mobile']
-            data.email = form.cleaned_data['email']
-            data.address = form.cleaned_data['address']
-            data.age = form.cleaned_data['age']
-            data.gender = form.cleaned_data['gender']
-            data.date_of_birth= form.cleaned_data['date_of_birth']
-            data.course = form.cleaned_data['course']
-            data.purpose = form.cleaned_data['purpose']
-            data.materials = form.cleaned_data['materials']
-            data.save()
+                        
+            form.save()
+
             messages.error(request,'Order Confirmed') 
             form = OrderForm()
-            context = { 'form' : form }
+            context = { 'form' : form, 'order' :True } 
             return render(request,'order.html',context) 
+        else:
+            form =OrderForm(request.POST)
+            context = { 'form' : form, 'order' :False } 
+            messages.error(request,'OrderNot Confirmed') 
+            return render(request,'order.html',context)
 
     form =OrderForm()
     context = { 'form' : form }

@@ -30,6 +30,6 @@ class Order(models.Model):
     purpose       = models.TextField(max_length=255, choices=purpose_types)
     materials     = models.ForeignKey(Materials,on_delete=models.CASCADE,null=True)
     department    = models.ForeignKey(Department,on_delete=models.CASCADE,null=True)
-
+    
     def __str__(self):
         return self.name

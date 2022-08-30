@@ -28,17 +28,19 @@
                      <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        {% for message in messages %}  
-                        <p>{{message}}</p>
-
-                        {%endfor%}
+                        
                       <div class="form-outline mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">submit</button>
-                        <a href="{% url 'logout' %}"  button class="btn btn-primary btn-lg btn-block"></button>logout</a>
+                        <a href="{% url 'place_order' %}" class="boxed-btn"><button  class="btn btn-primary btn-lg btn-block" type="submit">submit</button>
+                        <!-- <a href="{% url 'logout' %}"  button class="btn btn-primary btn-lg btn-block"></button>logout</a> -->
                       </div>
-                      {%for message in messages%}
+                        {% if order %} 
+                        <h1>hello</h1>
+                        <div onload=" sweetalertclick()"></div>
+
+                        {% endif %}
+                      {% for message in messages %}
                        <p class='text-danger'>{{message}}</p>
-                      {%endfor%}   
+                      {% endfor %}   
                       
                      </form>
           
@@ -63,6 +65,25 @@
               </div>
             </div>
           </section>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+          function sweetalertclick(){
+            swal({
+              title: "ORDER PLACED!",
+              text: "THANK YOU,Keep shop with us",
+              icon: "success",
+
+              })
+              setTimeout(()=>{
+                
+               window.location.href='http://127.0.0.1:8000/'
+              },2000)
+               
+              
+          }
+        </script>
     </body>
 
     </html>
