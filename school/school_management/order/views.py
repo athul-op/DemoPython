@@ -17,7 +17,11 @@ def place_orders(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.error(request,'Order Confirmed') 
             return redirect('place_order')
+        
+        messages.error(request,'OrderNot Confirmed') 
+
     return render(request, 'order.html', {'form': form})
 
     # if request.method == 'POST':
