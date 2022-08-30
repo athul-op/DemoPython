@@ -25,23 +25,23 @@
                         <label class="form-label" for="typeEmailX-2">Email</label>
                       </div>  -->
                       {%load crispy_forms_tags %} 
-                     <form method="POST" enctype="multipart/form-data">
+                     <form method="POST" enctype="multipart/form-data" id='orderForm' data-course-url="{% url 'ajax_load_course' %}">
                         {% csrf_token %}
                         {{ form|crispy }}
                         
                       <div class="form-outline mb-4">
-                        <a href="{% url 'place_order' %}" class="boxed-btn"><button  class="btn btn-primary btn-lg btn-block" type="submit">submit</button>
+                        <button  class="btn btn-primary btn-lg btn-block" type="submit">submit</button>
                         <!-- <a href="{% url 'logout' %}"  button class="btn btn-primary btn-lg btn-block"></button>logout</a> -->
                       </div>
-                        {% if order %} 
+                        <!-- {% if order %} 
                         <h1>hello</h1>
                         <div onload=" sweetalertclick()"></div>
 
-                        {% endif %}
-                      {% for message in messages %}
+                        {% endif %} -->
+                      <!-- {% for message in messages %}
                        <p class='text-danger'>{{message}}</p>
                       {% endfor %}   
-                      
+                       -->
                      </form>
           
                       <!-- Checkbox -->
@@ -65,7 +65,7 @@
               </div>
             </div>
           </section>
-          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
           <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
@@ -83,7 +83,35 @@
                
               
           }
-        </script>
+        </script> -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_department").change(function () {
+        const url = $("#orderForm").attr("data-course-url");  // get the url of the `load_cities` view
+        const departmentId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'department_id': departmentId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                  //$("#id_course").html(data);  // replace the contents of the city input with the data that came from the server  
+                
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (course) {
+                    html_data += `<option value="${course.id}">${course.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_course").html(html_data);
+
+                
+            }
+        });
+
+    });
+</script>
     </body>
 
     </html>
